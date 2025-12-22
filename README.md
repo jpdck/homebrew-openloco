@@ -14,3 +14,7 @@ brew install openloco
 ```bash
 open /opt/homebrew/opt/openloco/OpenLoco.app
 ```
+
+## Notes
+
+This works on my machine (mbp m4 running tahoe). If you find any issues, please open an issue in this repository so we can address them.
