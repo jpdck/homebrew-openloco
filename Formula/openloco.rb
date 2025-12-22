@@ -1,8 +1,8 @@
 class Openloco < Formula
   desc "Open-source re-implementation of Chris Sawyer's Locomotion"
   homepage "https://openloco.io/"
-  url "https://github.com/OpenLoco/OpenLoco/archive/refs/tags/v25.12.tar.gz"
-  sha256 "CALCULATE_WITH: shasum -a 256 OpenLoco-25.12.tar.gz"
+  url "https://api.github.com/repos/OpenLoco/OpenLoco/tarball/v25.12"
+  sha256 "a05b6c33d87c8171fe981d2fa0dba66dda490db6d977c0ead0b0c1e4825119e8"
   license "MIT"
   head "https://github.com/OpenLoco/OpenLoco.git", branch: "master"
 
