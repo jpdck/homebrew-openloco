@@ -11,8 +11,16 @@ brew install openloco
 
 ## Usage
 
+Run from the command line:
+
 ```bash
-open /opt/homebrew/opt/openloco/OpenLoco.app
+openloco
+```
+
+Or add to your Applications folder:
+
+```bash
+ln -s $(brew --prefix openloco)/OpenLoco.app /Applications/OpenLoco.app
 ```
 
 ## Notes
