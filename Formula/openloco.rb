@@ -50,6 +50,7 @@ class Openloco < Formula
 
     # On macOS, the build creates an .app bundle
     prefix.install "build/OpenLoco.app"
+    bin.write_exec_script prefix/"OpenLoco.app/Contents/MacOS/OpenLoco"
   end
 
   def caveats
@@ -61,11 +62,8 @@ class Openloco < Formula
 
       The game will prompt for the location of the original game files on first launch.
 
-      To launch OpenLoco:
-        open #{prefix}/OpenLoco.app
-
-      Or from the command line:
-        #{prefix}/OpenLoco.app/Contents/MacOS/OpenLoco
+      To add OpenLoco to your Applications folder, run:
+        ln -s #{prefix}/OpenLoco.app /Applications/OpenLoco.app
     EOS
   end
 
