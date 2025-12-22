@@ -1,35 +1,29 @@
 class Openloco < Formula
   desc "Open-source re-implementation of Chris Sawyer's Locomotion"
   homepage "https://openloco.io/"
-  url "https://api.github.com/repos/OpenLoco/OpenLoco/tarball/v25.12"
-  sha256 "a05b6c33d87c8171fe981d2fa0dba66dda490db6d977c0ead0b0c1e4825119e8"
+  url "https://github.com/OpenLoco/OpenLoco/archive/refs/tags/v25.12.tar.gz"
+  sha256 "11e06a365c083940665cfeaa0c367686b9171733cd05bb7692222226b74a716e"
   license "MIT"
   head "https://github.com/OpenLoco/OpenLoco.git", branch: "master"
 
   depends_on "cmake" => :build
   depends_on "pkgconf" => :build
-  depends_on "openal-soft"
+  depends_on "fmt"
   depends_on "libpng"
+  depends_on macos: :sonoma
+  depends_on "openal-soft"
   depends_on "sdl2"
   depends_on "yaml-cpp"
-  depends_on "fmt"
-  depends_on macos: :sonoma
 
   resource "sfl" do
-    url "https://api.github.com/repos/OpenLoco/OpenLoco/tarball/v25.12"
-    sha256 "a05b6c33d87c8171fe981d2fa0dba66dda490db6d977c0ead0b0c1e4825119e8"
+    url "https://github.com/slavenf/sfl-library/archive/refs/tags/2.0.2.tar.gz"
+    sha256 "b3548e5efb618afa82a5bae7026168b3394d4b06c23dd1ba94d02b69b4bb7244"
   end
 
   resource "openloco_objects" do
-    url "https://api.github.com/repos/OpenLoco/OpenLoco/tarball/v25.12"
-    sha256 "a05b6c33d87c8171fe981d2fa0dba66dda490db6d977c0ead0b0c1e4825119e8"
+    url "https://github.com/OpenLoco/OpenGraphics/releases/download/v0.1.6/objects.zip"
+    sha256 "4cea1ab77131650b5475b489445ce65c275b3a23b921456afda4d9c5c83e580c"
   end
-
-  # Dependencies handled by CMake FetchContent (no need to specify):
-  # - yaml-cpp (fetched if not found)
-  # - fmt (fetched if not found)
-  # - sfl-library (always fetched)
-  # - OpenGraphics objects (fetched during build)
 
   def install
     # openal-soft is keg-only, so we need to tell CMake where to find it
