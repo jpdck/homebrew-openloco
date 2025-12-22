@@ -16,13 +16,13 @@ class Openloco < Formula
   depends_on macos: :sonoma
 
   resource "sfl" do
-    url "https://github.com/slavenf/sfl-library/archive/refs/tags/2.0.2.tar.gz"
-    sha256 "b3548e5efb618afa82a5bae7026168b3394d4b06c23dd1ba94d02b69b4bb7244"
+    url "https://api.github.com/repos/OpenLoco/OpenLoco/tarball/v25.12"
+    sha256 "a05b6c33d87c8171fe981d2fa0dba66dda490db6d977c0ead0b0c1e4825119e8"
   end
 
   resource "openloco_objects" do
-    url "https://github.com/OpenLoco/OpenGraphics/releases/download/v0.1.6/objects.zip"
-    sha256 "4cea1ab77131650b5475b489445ce65c275b3a23b921456afda4d9c5c83e580c"
+    url "https://api.github.com/repos/OpenLoco/OpenLoco/tarball/v25.12"
+    sha256 "a05b6c33d87c8171fe981d2fa0dba66dda490db6d977c0ead0b0c1e4825119e8"
   end
 
   # Dependencies handled by CMake FetchContent (no need to specify):
