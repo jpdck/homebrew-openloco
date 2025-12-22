@@ -4,9 +4,15 @@ Personal Homebrew tap for OpenLoco formula.
 
 ## Installation
 
-```bash
-brew tap jpdck/openloco
-brew install openloco
+`brew install jpdck/openloco/openloco`
+
+Or `brew tap jpdck/openloco` and then `brew install openloco`.
+
+Or, in a `brew bundle` `Brewfile`:
+
+```ruby
+tap "jpdck/openloco"
+brew "openloco"
 ```
 
 ## Usage
