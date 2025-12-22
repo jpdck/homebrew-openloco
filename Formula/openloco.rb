@@ -11,7 +11,19 @@ class Openloco < Formula
   depends_on "openal-soft"
   depends_on "libpng"
   depends_on "sdl2"
+  depends_on "yaml-cpp"
+  depends_on "fmt"
   depends_on macos: :sonoma
+
+  resource "sfl" do
+    url "https://github.com/slavenf/sfl-library/archive/refs/tags/2.0.2.tar.gz"
+    sha256 "b3548e5efb618afa82a5bae7026168b3394d4b06c23dd1ba94d02b69b4bb7244"
+  end
+
+  resource "openloco_objects" do
+    url "https://github.com/OpenLoco/OpenGraphics/releases/download/v0.1.6/objects.zip"
+    sha256 "4cea1ab77131650b5475b489445ce65c275b3a23b921456afda4d9c5c83e580c"
+  end
 
   # Dependencies handled by CMake FetchContent (no need to specify):
   # - yaml-cpp (fetched if not found)
@@ -21,8 +33,13 @@ class Openloco < Formula
 
   def install
     # openal-soft is keg-only, so we need to tell CMake where to find it
+    (buildpath/"sfl").install resource("sfl")
+    (buildpath/"openloco_objects").install resource("openloco_objects")
+
     args = %W[
-      -DCMAKE_PREFIX_PATH=#{Formula["openal-soft"].opt_prefix}
+      -DCMAKE_PREFIX_PATH=#{Formula["openal-soft"].opt_prefix};#{HOMEBREW_PREFIX}
+      -DFETCHCONTENT_SOURCE_DIR_SFL=#{buildpath}/sfl
+      -DFETCHCONTENT_SOURCE_DIR_OPENLOCO_OBJECTS=#{buildpath}/openloco_objects
       -DOPENLOCO_BUILD_TESTS=OFF
       -DOPENLOCO_HEADER_CHECK=OFF
       -DSTRICT=OFF
