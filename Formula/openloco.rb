@@ -63,7 +63,7 @@ class Openloco < Formula
 
   test do
     # Basic test - check the .app bundle was created
-    assert_predicate prefix/"OpenLoco.app/Contents/MacOS/OpenLoco", :exist?
+    assert_path_exists prefix/"OpenLoco.app/Contents/MacOS/OpenLoco", :exist?
 
     # Verify it's a valid Mach-O binary
     system "file", "#{prefix}/OpenLoco.app/Contents/MacOS/OpenLoco"
