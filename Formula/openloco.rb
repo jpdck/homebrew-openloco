@@ -10,10 +10,13 @@ class Openloco < Formula
   depends_on "pkgconf" => :build
   depends_on "fmt"
   depends_on "libpng"
-  depends_on macos: :sonoma
   depends_on "openal-soft"
   depends_on "sdl2"
   depends_on "yaml-cpp"
+
+  on_macos do
+    depends_on macos: :sonoma
+  end
 
   resource "sfl" do
     url "https://github.com/slavenf/sfl-library/archive/refs/tags/2.0.2.tar.gz"
@@ -26,7 +29,7 @@ class Openloco < Formula
   end
 
   def install
-    # openal-soft is keg-only, so we need to tell CMake where to find it
+    odie "OpenLoco is currently only supported on ARM-based Macs." if OS.mac? && Hardware::CPU.intel?
     (buildpath/"sfl").install resource("sfl")
     (buildpath/"openloco_objects").install resource("openloco_objects")
 
@@ -39,33 +42,46 @@ class Openloco < Formula
       -DSTRICT=OFF
     ]
 
-    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args, *args
     system "cmake", "--build", "build", "--config", "Release"
 
-    # On macOS, the build creates an .app bundle
-    prefix.install "build/OpenLoco.app"
-    bin.write_exec_script prefix/"OpenLoco.app/Contents/MacOS/OpenLoco"
+    if OS.mac?
+      prefix.install "build/OpenLoco.app"
+      bin.write_exec_script prefix/"OpenLoco.app/Contents/MacOS/OpenLoco"
+      (prefix/"OpenLoco.app/Contents/Resources").install buildpath/"openloco_objects" => "objects"
+    else
+      system "cmake", "--install", "build"
+    end
   end
 
   def caveats
-    <<~EOS
+    msg = <<~EOS
       OpenLoco requires the asset files from the original Chris Sawyer's Locomotion.
       You can purchase the game from:
         - Steam: https://store.steampowered.com/app/356430/
         - GOG: https://www.gog.com/game/chris_sawyers_locomotion
 
       The game will prompt for the location of the original game files on first launch.
-
-      To add OpenLoco to your Applications folder, run:
-        ln -s #{prefix}/OpenLoco.app /Applications/OpenLoco.app
     EOS
+
+    if OS.mac?
+      msg += <<~EOS
+
+        To add OpenLoco to your Applications folder, run:
+          ln -s #{prefix}/OpenLoco.app /Applications/OpenLoco.app
+      EOS
+    end
+
+    msg
   end
 
   test do
-    # Basic test - check the .app bundle was created
-    assert_path_exists prefix/"OpenLoco.app/Contents/MacOS/OpenLoco", :exist?
-
-    # Verify it's a valid Mach-O binary
-    system "file", "#{prefix}/OpenLoco.app/Contents/MacOS/OpenLoco"
+    if OS.mac?
+      assert_path_exists prefix/"OpenLoco.app/Contents/MacOS/OpenLoco", :exist?
+      system "file", "#{prefix}/OpenLoco.app/Contents/MacOS/OpenLoco"
+    else
+      assert_path_exists bin/"OpenLoco", :exist?
+      system "file", "#{bin}/OpenLoco"
+    end
   end
 end
