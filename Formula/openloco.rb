@@ -77,10 +77,10 @@ class Openloco < Formula
 
   test do
     if OS.mac?
-      assert_path_exists prefix/"OpenLoco.app/Contents/MacOS/OpenLoco", :exist?
+      assert_path_exists prefix/"OpenLoco.app/Contents/MacOS/OpenLoco"
       system "file", "#{prefix}/OpenLoco.app/Contents/MacOS/OpenLoco"
     else
-      assert_path_exists bin/"OpenLoco", :exist?
+      assert_path_exists bin/"OpenLoco"
       system "file", "#{bin}/OpenLoco"
     end
   end
