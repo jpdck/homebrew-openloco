@@ -51,6 +51,8 @@ class Openloco < Formula
       (prefix/"OpenLoco.app/Contents/Resources").install buildpath/"openloco_objects" => "objects"
     else
       system "cmake", "--install", "build"
+      # Remove data directory from bin (it's not an executable)
+      rm_rf bin/"data"
     end
   end
 
