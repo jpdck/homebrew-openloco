@@ -52,7 +52,7 @@ class Openloco < Formula
     else
       system "cmake", "--install", "build"
       # Remove data directory from bin (it's not an executable)
-      rm_rf bin/"data"
+      rm_r bin/"data"
     end
   end
 
