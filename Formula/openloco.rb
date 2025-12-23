@@ -1,8 +1,8 @@
 class Openloco < Formula
   desc "Open-source re-implementation of Chris Sawyer's Locomotion"
   homepage "https://openloco.io/"
-  url "https://api.github.com/repos/OpenLoco/OpenLoco/tarball/v25.12"
-  sha256 "a05b6c33d87c8171fe981d2fa0dba66dda490db6d977c0ead0b0c1e4825119e8"
+  url "https://github.com/OpenLoco/OpenLoco/archive/refs/tags/v25.12.tar.gz"
+  sha256 "11e06a365c083940665cfeaa0c367686b9171733cd05bb7692222226b74a716e"
   license "MIT"
   head "https://github.com/OpenLoco/OpenLoco.git", branch: "master"
 
@@ -19,13 +19,13 @@ class Openloco < Formula
   end
 
   resource "sfl" do
-    url "https://api.github.com/repos/OpenLoco/OpenLoco/tarball/v25.12"
-    sha256 "a05b6c33d87c8171fe981d2fa0dba66dda490db6d977c0ead0b0c1e4825119e8"
+    url "https://github.com/slavenf/sfl-library/archive/refs/tags/2.0.2.tar.gz"
+    sha256 "b3548e5efb618afa82a5bae7026168b3394d4b06c23dd1ba94d02b69b4bb7244"
   end
 
   resource "openloco_objects" do
-    url "https://api.github.com/repos/OpenLoco/OpenLoco/tarball/v25.12"
-    sha256 "a05b6c33d87c8171fe981d2fa0dba66dda490db6d977c0ead0b0c1e4825119e8"
+    url "https://github.com/OpenLoco/OpenGraphics/releases/download/v0.1.6/objects.zip"
+    sha256 "4cea1ab77131650b5475b489445ce65c275b3a23b921456afda4d9c5c83e580c"
   end
 
   def install
@@ -51,6 +51,8 @@ class Openloco < Formula
       (prefix/"OpenLoco.app/Contents/Resources").install buildpath/"openloco_objects" => "objects"
     else
       system "cmake", "--install", "build"
+      # Remove data directory from bin (it's not an executable)
+      rm_r bin/"data"
     end
   end
 
@@ -77,10 +79,10 @@ class Openloco < Formula
 
   test do
     if OS.mac?
-      assert_path_exists prefix/"OpenLoco.app/Contents/MacOS/OpenLoco", :exist?
+      assert_path_exists prefix/"OpenLoco.app/Contents/MacOS/OpenLoco"
       system "file", "#{prefix}/OpenLoco.app/Contents/MacOS/OpenLoco"
     else
-      assert_path_exists bin/"OpenLoco", :exist?
+      assert_path_exists bin/"OpenLoco"
       system "file", "#{bin}/OpenLoco"
     end
   end

@@ -1,5 +1,7 @@
 # homebrew-openloco
 
+[![brew test-bot](https://github.com/jpdck/homebrew-openloco/actions/workflows/tests.yml/badge.svg)](https://github.com/jpdck/homebrew-openloco/actions/workflows/tests.yml)
+
 Personal Homebrew tap for OpenLoco formula.
 
 ## Installation
